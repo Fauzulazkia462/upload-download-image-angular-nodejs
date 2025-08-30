@@ -1,0 +1,26 @@
+<div class="container">
+    <div class="upload-section">
+        <h2 class="gallery-title">{{ title() }}</h2>
+        <div class="upload-controls">
+            <input type="file" accept="image/*" class="file-input" #fileInput (change)="onFileSelected($event)">
+            <button mat-raised-button color="primary" (click)="uploadImage(); fileInput.value=''">Upload</button>
+        </div>
+    </div>
+
+    <div *ngIf="error()" style="color: red" class="error-message">
+        {{ error() }}
+    </div>
+
+    <h2>Gallery</h2>
+    <div class="gallery-container">
+        <mat-card *ngFor="let img of images()" class="card">
+            <img mat-card-image [src]="'http://localhost:5000/api/image/image/' + img._id" width="200"
+                alt="{{img.filename}}" />
+            <mat-card-title>{{ img.filename }}</mat-card-title>
+            <mat-card-actions>
+                <button mat-button (click)="downloadImage(img)">Download</button>
+                <button mat-button (click)="deleteImage(img)" style="color: red;">Delete</button>
+            </mat-card-actions>
+        </mat-card>
+    </div>
+</div>
